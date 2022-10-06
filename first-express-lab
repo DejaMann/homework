@@ -1,0 +1,50 @@
+const express = require('express')
+
+// Create the Express app
+const app = express()
+const PORT = 3000
+
+// Make a route '/greeting'that sends a generic greeting to the screen like "Hello, stranger".
+app.get('/greeting/', (req, res) => {
+    res.send('Welcome to Express Lab');
+})
+
+// Give the greeting route a param /:name 
+app.get('/greeting/:name', (req, res) => {
+    const {name} = req.params
+    res.send(`Welcome, ${name}`)
+})
+// When hitting the route, the page should display a message such as "Hello, ", or "What's up, <name>", or "<name>! It's so great to see you!" (ex. hitting '/greeting/Jimmy-boy'should display Wow! Hello there, Jimmy-boy on the page).
+
+
+// Tip Calculator
+// Your app should have a route of '/tip'and it should expect 2 params. One should be total and one should be tipPercentage.
+app.get('/tip/:total/:tipPercentage', (req, res) => {
+    let {total, tipPercentage} = req.params
+    let tip = total *= (tipPercentage/100)
+    res.send(`Your tip is ${tip}`)
+})
+// When hitting the route, the page should display how much your tip will be based on the total amount of the bill and the tip percentage. (ex. hitting '/tip/100/20'should display 20 on the page).
+
+
+// Magic 8 Ball
+// Create a route of '/magic'that should expect a phrase in the URL that asks the Magic 8 ball a question.
+
+app.get('/magic/:ask', (req, res) => {
+    const {ask} = req.params
+    const ballArr = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely","You may rely on it", "As I see it yes", "Most likely", "Outlook good","Yes", "Signs point to yes", "Reply hazy try again", "Ask again later","Better not tell you now", "Cannot predict now", "Concentrate and ask again","Don't count on it", "My reply is no", "My sources say no","Outlook not so good", "Very doubtful"] 
+    let answer = ballArr[Math.floor(Math.random() * ballArr.length)]
+    res.send(`${ask}? The Magic 8 Ball says, "${answer}."`)
+})
+
+// So if the user hits that route and asks a question of "Will I be a Millionaire" (ex. '/magic/Will I Be%20A%20Millionaire') he should have return to him his question AND a random Magic 8 ball response (see the array below) on the screen.
+// We can't use spaces in the url, so we use %20to express a space in the url.
+// So if the user hits that route and asks a question of "Will I be a Millionaire" he should get his question asked and a random Magic 8 ball quote on the screen.
+// Send the magic 8 ball response back between html <h1>tags
+// Use this array of Magic 8 ball responses.....
+// ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely","You may rely on it", "As I see it yes", "Most likely", "Outlook good","Yes", "Signs point to yes", "Reply hazy try again", "Ask again later","Better not tell you now", "Cannot predict now", "Concentrate and ask again","Don't count on it", "My reply is no", "My sources say no","Outlook not so good", "Very doubtful"] 
+
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+})
